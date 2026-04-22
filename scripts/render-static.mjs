@@ -11,6 +11,7 @@ const outputPath = join(root, "大健康雙面板 Demo.html");
 const interactivePath = join(root, "大健康雙面板 互動版.html");
 const readableAliasPath = join(root, "presentation.html");
 const interactiveAliasPath = join(root, "interactive.html");
+const assetVersion = Date.now().toString(36);
 
 const bundleCode = await readFile(bundlePath, "utf8");
 
@@ -89,9 +90,9 @@ ${extraStyles}
 </head>
 <body>
 <div id="root"></div>
-<script src="./vendor/react.development.js"></script>
-<script src="./vendor/react-dom.development.js"></script>
-<script src="./app.bundle.js"></script>
+<script src="./vendor/react.development.js?v=${assetVersion}"></script>
+<script src="./vendor/react-dom.development.js?v=${assetVersion}"></script>
+<script src="./app.bundle.js?v=${assetVersion}"></script>
 </body>
 </html>
 `;
@@ -115,12 +116,12 @@ ${extraStyles}
   * { box-sizing: border-box; }
   button { font-family: inherit; }
 </style>
-<script src="./vendor/react.development.js"></script>
-<script src="./vendor/react-dom.development.js"></script>
+<script src="./vendor/react.development.js?v=${assetVersion}"></script>
+<script src="./vendor/react-dom.development.js?v=${assetVersion}"></script>
 </head>
 <body>
 <div id="root"></div>
-<script src="./app.bundle.js"></script>
+<script src="./app.bundle.js?v=${assetVersion}"></script>
 </body>
 </html>
 `;
