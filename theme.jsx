@@ -45,7 +45,7 @@ const THEME = {
   hair:         '#DCD9D2',
 
   // 字體
-  serif:        "'Cormorant Garamond', 'Noto Serif TC', serif",
+  serif:        "'KuMincho', 'Cormorant Garamond', 'Noto Serif TC', serif",
   sans:         "'Noto Sans TC', sans-serif",
   mono:         "'JetBrains Mono', monospace",
 };

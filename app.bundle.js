@@ -1,5 +1,5 @@
 (() => {
-  // ../../../../../../private/var/folders/28/_p58vyd12zbf4wkxq5cpxmrr0000gn/T/klf-health-build-JoY0FZ/app.entry.jsx
+  // ../../../../../../private/var/folders/28/_p58vyd12zbf4wkxq5cpxmrr0000gn/T/klf-health-build-etBApq/app.entry.jsx
   var THEME = {
     // 底色：極致的純白
     pageBg: "#FFFFFF",
@@ -39,7 +39,7 @@
     lineSoft: "#F0EEE9",
     hair: "#DCD9D2",
     // 字體
-    serif: "'Cormorant Garamond', 'Noto Serif TC', serif",
+    serif: "'KuMincho', 'Cormorant Garamond', 'Noto Serif TC', serif",
     sans: "'Noto Sans TC', sans-serif",
     mono: "'JetBrains Mono', monospace"
   };
@@ -1604,7 +1604,7 @@
     const chartSize = mobile ? 208 : 340;
     const chartCompact = mobile;
     const chartRadius = chartSize * (chartCompact ? 0.34 : 0.35);
-    const chartCenterX = stageWidth / 2;
+    const chartCenterX = stageWidth / 2 + (mobile ? -8 : 0);
     const chartCenterY = stageHeight / 2;
     const chartLeft = chartCenterX - chartSize / 2;
     const chartTop = chartCenterY - chartSize / 2;
