@@ -1,5 +1,5 @@
 (() => {
-  // ../../../../../../private/var/folders/28/_p58vyd12zbf4wkxq5cpxmrr0000gn/T/klf-health-build-akIvHF/app.entry.jsx
+  // ../../../../../../private/var/folders/28/_p58vyd12zbf4wkxq5cpxmrr0000gn/T/klf-health-build-C5nvOt/app.entry.jsx
   var THEME = {
     // 底色：極致的純白
     pageBg: "#FFFFFF",
@@ -4720,8 +4720,7 @@
     PanelBMobile
   });
   var TWEAKS = {
-    panel: "A",
-    device: "desktop"
+    panel: "A"
   };
   function initialView(key, fallback, allowed) {
     try {
@@ -4732,6 +4731,18 @@
     }
     return TWEAKS[key] || fallback;
   }
+  function readResponsiveDevice() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const forced = params.get("device");
+      if (forced === "desktop" || forced === "mobile") return forced;
+    } catch (error) {
+    }
+    if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
+      return window.matchMedia("(max-width: 960px)").matches ? "mobile" : "desktop";
+    }
+    return "desktop";
+  }
   function App() {
     injectStyles();
     const memberKey = "yuhong";
@@ -4740,10 +4751,7 @@
       "A",
       "B"
     ]));
-    const [device, setDevice] = React.useState(() => initialView("device", "mobile", [
-      "desktop",
-      "mobile"
-    ]));
+    const [device, setDevice] = React.useState(readResponsiveDevice);
     const [focusId, setFocusId] = React.useState(CASES[0].id);
     const member = MEMBERS[memberKey];
     const MOB_W = 390;
@@ -4757,6 +4765,31 @@
       fontFamily: THEME.serif,
       cursor: "pointer"
     };
+    React.useEffect(() => {
+      if (typeof window === "undefined" || typeof window.matchMedia !== "function") return void 0;
+      let forced = null;
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const deviceParam = params.get("device");
+        if (deviceParam === "desktop" || deviceParam === "mobile") {
+          forced = deviceParam;
+        }
+      } catch (error) {
+      }
+      if (forced) {
+        setDevice(forced);
+        return void 0;
+      }
+      const media = window.matchMedia("(max-width: 960px)");
+      const syncDevice = () => setDevice(media.matches ? "mobile" : "desktop");
+      syncDevice();
+      if (typeof media.addEventListener === "function") {
+        media.addEventListener("change", syncDevice);
+        return () => media.removeEventListener("change", syncDevice);
+      }
+      media.addListener(syncDevice);
+      return () => media.removeListener(syncDevice);
+    }, []);
     return /* @__PURE__ */ React.createElement("div", {
       style: {
         minHeight: "100vh",
@@ -4835,30 +4868,6 @@
         ...btnBase,
         background: panel === item.k ? THEME.ink : THEME.cardBg,
         color: panel === item.k ? THEME.cardBg : THEME.ink
-      }
-    }, item.label))), /* @__PURE__ */ React.createElement("div", {
-      style: {
-        display: "flex",
-        border: `1px solid ${THEME.line}`
-      }
-    }, [
-      {
-        k: "desktop",
-        label: "\u96FB\u8166\u7248"
-      },
-      {
-        k: "mobile",
-        label: "\u624B\u6A5F\u7248"
-      }
-    ].map((item) => /* @__PURE__ */ React.createElement("button", {
-      key: item.k,
-      className: "in-btn",
-      onClick: () => setDevice(item.k),
-      style: {
-        ...btnBase,
-        background: device === item.k ? THEME.surfaceSoft : THEME.cardBg,
-        color: device === item.k ? THEME.ink : THEME.inkSoft,
-        fontFamily: THEME.sans
       }
     }, item.label)))), /* @__PURE__ */ React.createElement("div", {
       style: {

@@ -1,6 +1,5 @@
 const TWEAKS = {
   panel: 'A',
-  device: 'desktop',
 };
 
 function initialView(key, fallback, allowed) {
@@ -14,12 +13,28 @@ function initialView(key, fallback, allowed) {
   return TWEAKS[key] || fallback;
 }
 
+function readResponsiveDevice() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const forced = params.get('device');
+    if (forced === 'desktop' || forced === 'mobile') return forced;
+  } catch (error) {
+    // Ignore URL parsing issues and fall back to viewport detection.
+  }
+
+  if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
+    return window.matchMedia('(max-width: 960px)').matches ? 'mobile' : 'desktop';
+  }
+
+  return 'desktop';
+}
+
 function App() {
   injectStyles();
   const memberKey = 'yuhong';
   const viz = 'radar';
   const [panel, setPanel] = React.useState(() => initialView('panel', 'A', ['A', 'B']));
-  const [device, setDevice] = React.useState(() => initialView('device', 'mobile', ['desktop', 'mobile']));
+  const [device, setDevice] = React.useState(readResponsiveDevice);
   const [focusId, setFocusId] = React.useState(CASES[0].id);
 
   const member = MEMBERS[memberKey];
@@ -35,6 +50,38 @@ function App() {
     fontFamily: THEME.serif,
     cursor: 'pointer',
   };
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return undefined;
+
+    let forced = null;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const deviceParam = params.get('device');
+      if (deviceParam === 'desktop' || deviceParam === 'mobile') {
+        forced = deviceParam;
+      }
+    } catch (error) {
+      // Ignore URL parsing issues and continue with viewport detection.
+    }
+
+    if (forced) {
+      setDevice(forced);
+      return undefined;
+    }
+
+    const media = window.matchMedia('(max-width: 960px)');
+    const syncDevice = () => setDevice(media.matches ? 'mobile' : 'desktop');
+    syncDevice();
+
+    if (typeof media.addEventListener === 'function') {
+      media.addEventListener('change', syncDevice);
+      return () => media.removeEventListener('change', syncDevice);
+    }
+
+    media.addListener(syncDevice);
+    return () => media.removeListener(syncDevice);
+  }, []);
 
   return (
     <div style={{ minHeight: '100vh', background: THEME.surface, padding: '40px 0 80px' }}>
@@ -75,27 +122,6 @@ function App() {
                 ...btnBase,
                 background: panel === item.k ? THEME.ink : THEME.cardBg,
                 color: panel === item.k ? THEME.cardBg : THEME.ink,
-              }}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        <div style={{ display: 'flex', border: `1px solid ${THEME.line}` }}>
-          {[
-            { k: 'desktop', label: '電腦版' },
-            { k: 'mobile', label: '手機版' },
-          ].map((item) => (
-            <button
-              key={item.k}
-              className="in-btn"
-              onClick={() => setDevice(item.k)}
-              style={{
-                ...btnBase,
-                background: device === item.k ? THEME.surfaceSoft : THEME.cardBg,
-                color: device === item.k ? THEME.ink : THEME.inkSoft,
-                fontFamily: THEME.sans,
               }}
             >
               {item.label}

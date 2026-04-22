@@ -64,7 +64,6 @@ try {
     throw new Error("Static render failed: App not found on globalThis.__KLF_APP__");
   }
 
-  const markup = renderToStaticMarkup(React.createElement(App));
   const extraStyles = injectedStyles.join("\n");
 
   const baseHtml = `<!doctype html>
@@ -89,7 +88,7 @@ ${extraStyles}
 </style>
 </head>
 <body>
-<div id="root">${markup}</div>
+<div id="root"></div>
 <script src="./vendor/react.development.js"></script>
 <script src="./vendor/react-dom.development.js"></script>
 <script src="./app.bundle.js"></script>
