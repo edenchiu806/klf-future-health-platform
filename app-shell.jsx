@@ -38,12 +38,18 @@ function App() {
   const [focusId, setFocusId] = React.useState(CASES[0].id);
 
   const member = MEMBERS[memberKey];
-  const MOB_W = 390;
-  const MOB_H = 820;
+  const isMobile = device === 'mobile';
+  const outerPad = isMobile ? 18 : 40;
+  const heroTitleSize = isMobile ? 28 : 38;
+  const heroTitleTracking = isMobile ? 9 : 16;
+  const heroEyebrowSize = isMobile ? 10 : 11;
+  const heroEyebrowTracking = isMobile ? 6 : 8;
+  const btnPadding = isMobile ? '10px 14px' : '10px 18px';
+  const contentMaxWidth = isMobile ? 520 : 1480;
 
   const btnBase = {
     border: 'none',
-    padding: '10px 18px',
+    padding: btnPadding,
     whiteSpace: 'nowrap',
     fontSize: 12,
     letterSpacing: 2,
@@ -84,26 +90,26 @@ function App() {
   }, []);
 
   return (
-    <div style={{ minHeight: '100vh', background: THEME.surface, padding: '40px 0 80px' }}>
-      <div className="in-fade-in" style={{ maxWidth: 1480, margin: '0 auto 24px', padding: '0 40px', textAlign: 'center' }}>
-        <div style={{ fontFamily: THEME.serif, fontStyle: 'italic', fontSize: 11, color: THEME.metal, letterSpacing: 8, marginBottom: 16 }}>
+    <div style={{ minHeight: '100vh', background: THEME.surface, padding: isMobile ? '26px 0 56px' : '40px 0 80px' }}>
+      <div className="in-fade-in" style={{ maxWidth: 1480, margin: '0 auto 24px', padding: `0 ${outerPad}px`, textAlign: 'center' }}>
+        <div style={{ fontFamily: THEME.serif, fontStyle: 'italic', fontSize: heroEyebrowSize, color: THEME.metal, letterSpacing: heroEyebrowTracking, marginBottom: isMobile ? 14 : 16 }}>
           Health Atelier · Member Council
         </div>
-        <div style={{ fontFamily: THEME.serif, fontSize: 38, color: THEME.ink, letterSpacing: 16, fontWeight: 400 }}>
+        <div style={{ fontFamily: THEME.serif, fontSize: heroTitleSize, color: THEME.ink, letterSpacing: heroTitleTracking, fontWeight: 400 }}>
           大健康私人俱樂部
         </div>
-        <div style={{ margin: '22px auto 4px' }}>
-          <HairRule w={56} />
+        <div style={{ margin: isMobile ? '18px auto 4px' : '22px auto 4px' }}>
+          <HairRule w={isMobile ? 40 : 56} />
         </div>
-        <div style={{ margin: '18px auto 0', maxWidth: 640, fontSize: 11, color: THEME.inkSoft, letterSpacing: 2, lineHeight: 2 }}>
+        <div style={{ margin: '18px auto 0', maxWidth: isMobile ? 320 : 640, fontSize: isMobile ? 10 : 11, color: THEME.inkSoft, letterSpacing: isMobile ? 1.5 : 2, lineHeight: 2 }}>
           A · 會員專屬頁　　|　　B · 團隊協作台
         </div>
       </div>
 
       <div style={{
         maxWidth: 1480,
-        margin: '0 auto 32px',
-        padding: '0 40px',
+        margin: `0 auto ${isMobile ? 20 : 32}px`,
+        padding: `0 ${outerPad}px`,
         display: 'flex',
         justifyContent: 'center',
         gap: 20,
@@ -130,7 +136,7 @@ function App() {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1480, margin: '0 auto', padding: '0 40px' }}>
+      <div style={{ maxWidth: contentMaxWidth, margin: '0 auto', padding: `0 ${outerPad}px` }}>
         {device === 'desktop' ? (
           <div className="in-fade-in" style={{
             background: THEME.cardBg,
@@ -143,44 +149,15 @@ function App() {
               : <PanelBDesktop cases={CASES} focusId={focusId} onFocus={setFocusId} member={member} />}
           </div>
         ) : (
-          <div className="in-fade-in" style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{
-              width: MOB_W + 14,
-              padding: 7,
-              background: THEME.phoneShellGradient,
-              borderRadius: 48,
-              boxShadow: '0 40px 80px -30px rgba(20,20,20,0.45)',
-            }}>
-              <div className="in-scroll" style={{
-                width: MOB_W,
-                height: MOB_H,
-                overflowY: 'auto',
-                overflowX: 'hidden',
-                background: THEME.cardBg,
-                borderRadius: 41,
-                position: 'relative',
-              }}>
-                <div style={{
-                  position: 'sticky',
-                  top: 0,
-                  zIndex: 10,
-                  height: 32,
-                  background: 'linear-gradient(180deg, rgba(255,255,255,0.98) 60%, rgba(255,255,255,0) 100%)',
-                  backdropFilter: 'blur(6px)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                  paddingTop: 7,
-                }}>
-                  <div style={{ width: 100, height: 22, background: THEME.phoneNotchGradient, borderRadius: 14 }} />
-                </div>
-                <div style={{ marginTop: -32 }}>
-                  {panel === 'A'
-                    ? <PanelAMobile member={member} viz={viz} />
-                    : <PanelBMobile cases={CASES} focusId={focusId} onFocus={setFocusId} member={member} />}
-                </div>
-              </div>
-            </div>
+          <div className="in-fade-in" style={{
+            background: THEME.cardBg,
+            border: `1px solid ${THEME.line}`,
+            boxShadow: '0 30px 70px -44px rgba(20, 20, 20, 0.24)',
+            overflow: 'hidden',
+          }}>
+            {panel === 'A'
+              ? <PanelAMobile member={member} viz={viz} />
+              : <PanelBMobile cases={CASES} focusId={focusId} onFocus={setFocusId} member={member} />}
           </div>
         )}
       </div>

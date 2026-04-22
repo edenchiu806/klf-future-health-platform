@@ -1,5 +1,5 @@
 (() => {
-  // ../../../../../../private/var/folders/28/_p58vyd12zbf4wkxq5cpxmrr0000gn/T/klf-health-build-FXVwse/app.entry.jsx
+  // ../../../../../../private/var/folders/28/_p58vyd12zbf4wkxq5cpxmrr0000gn/T/klf-health-build-JoY0FZ/app.entry.jsx
   var THEME = {
     // 底色：極致的純白
     pageBg: "#FFFFFF",
@@ -4754,11 +4754,17 @@
     const [device, setDevice] = React.useState(readResponsiveDevice);
     const [focusId, setFocusId] = React.useState(CASES[0].id);
     const member = MEMBERS[memberKey];
-    const MOB_W = 390;
-    const MOB_H = 820;
+    const isMobile = device === "mobile";
+    const outerPad = isMobile ? 18 : 40;
+    const heroTitleSize = isMobile ? 28 : 38;
+    const heroTitleTracking = isMobile ? 9 : 16;
+    const heroEyebrowSize = isMobile ? 10 : 11;
+    const heroEyebrowTracking = isMobile ? 6 : 8;
+    const btnPadding = isMobile ? "10px 14px" : "10px 18px";
+    const contentMaxWidth = isMobile ? 520 : 1480;
     const btnBase = {
       border: "none",
-      padding: "10px 18px",
+      padding: btnPadding,
       whiteSpace: "nowrap",
       fontSize: 12,
       letterSpacing: 2,
@@ -4794,53 +4800,53 @@
       style: {
         minHeight: "100vh",
         background: THEME.surface,
-        padding: "40px 0 80px"
+        padding: isMobile ? "26px 0 56px" : "40px 0 80px"
       }
     }, /* @__PURE__ */ React.createElement("div", {
       className: "in-fade-in",
       style: {
         maxWidth: 1480,
         margin: "0 auto 24px",
-        padding: "0 40px",
+        padding: `0 ${outerPad}px`,
         textAlign: "center"
       }
     }, /* @__PURE__ */ React.createElement("div", {
       style: {
         fontFamily: THEME.serif,
         fontStyle: "italic",
-        fontSize: 11,
+        fontSize: heroEyebrowSize,
         color: THEME.metal,
-        letterSpacing: 8,
-        marginBottom: 16
+        letterSpacing: heroEyebrowTracking,
+        marginBottom: isMobile ? 14 : 16
       }
     }, "Health Atelier \xB7 Member Council"), /* @__PURE__ */ React.createElement("div", {
       style: {
         fontFamily: THEME.serif,
-        fontSize: 38,
+        fontSize: heroTitleSize,
         color: THEME.ink,
-        letterSpacing: 16,
+        letterSpacing: heroTitleTracking,
         fontWeight: 400
       }
     }, "\u5927\u5065\u5EB7\u79C1\u4EBA\u4FF1\u6A02\u90E8"), /* @__PURE__ */ React.createElement("div", {
       style: {
-        margin: "22px auto 4px"
+        margin: isMobile ? "18px auto 4px" : "22px auto 4px"
       }
     }, /* @__PURE__ */ React.createElement(HairRule, {
-      w: 56
+      w: isMobile ? 40 : 56
     })), /* @__PURE__ */ React.createElement("div", {
       style: {
         margin: "18px auto 0",
-        maxWidth: 640,
-        fontSize: 11,
+        maxWidth: isMobile ? 320 : 640,
+        fontSize: isMobile ? 10 : 11,
         color: THEME.inkSoft,
-        letterSpacing: 2,
+        letterSpacing: isMobile ? 1.5 : 2,
         lineHeight: 2
       }
     }, "A \xB7 \u6703\u54E1\u5C08\u5C6C\u9801\u3000\u3000|\u3000\u3000B \xB7 \u5718\u968A\u5354\u4F5C\u53F0")), /* @__PURE__ */ React.createElement("div", {
       style: {
         maxWidth: 1480,
-        margin: "0 auto 32px",
-        padding: "0 40px",
+        margin: `0 auto ${isMobile ? 20 : 32}px`,
+        padding: `0 ${outerPad}px`,
         display: "flex",
         justifyContent: "center",
         gap: 20,
@@ -4871,9 +4877,9 @@
       }
     }, item.label)))), /* @__PURE__ */ React.createElement("div", {
       style: {
-        maxWidth: 1480,
+        maxWidth: contentMaxWidth,
         margin: "0 auto",
-        padding: "0 40px"
+        padding: `0 ${outerPad}px`
       }
     }, device === "desktop" ? /* @__PURE__ */ React.createElement("div", {
       className: "in-fade-in",
@@ -4894,51 +4900,10 @@
     })) : /* @__PURE__ */ React.createElement("div", {
       className: "in-fade-in",
       style: {
-        display: "flex",
-        justifyContent: "center"
-      }
-    }, /* @__PURE__ */ React.createElement("div", {
-      style: {
-        width: MOB_W + 14,
-        padding: 7,
-        background: THEME.phoneShellGradient,
-        borderRadius: 48,
-        boxShadow: "0 40px 80px -30px rgba(20,20,20,0.45)"
-      }
-    }, /* @__PURE__ */ React.createElement("div", {
-      className: "in-scroll",
-      style: {
-        width: MOB_W,
-        height: MOB_H,
-        overflowY: "auto",
-        overflowX: "hidden",
         background: THEME.cardBg,
-        borderRadius: 41,
-        position: "relative"
-      }
-    }, /* @__PURE__ */ React.createElement("div", {
-      style: {
-        position: "sticky",
-        top: 0,
-        zIndex: 10,
-        height: 32,
-        background: "linear-gradient(180deg, rgba(255,255,255,0.98) 60%, rgba(255,255,255,0) 100%)",
-        backdropFilter: "blur(6px)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        paddingTop: 7
-      }
-    }, /* @__PURE__ */ React.createElement("div", {
-      style: {
-        width: 100,
-        height: 22,
-        background: THEME.phoneNotchGradient,
-        borderRadius: 14
-      }
-    })), /* @__PURE__ */ React.createElement("div", {
-      style: {
-        marginTop: -32
+        border: `1px solid ${THEME.line}`,
+        boxShadow: "0 30px 70px -44px rgba(20, 20, 20, 0.24)",
+        overflow: "hidden"
       }
     }, panel === "A" ? /* @__PURE__ */ React.createElement(PanelAMobile, {
       member,
@@ -4948,7 +4913,7 @@
       focusId,
       onFocus: setFocusId,
       member
-    })))))));
+    }))));
   }
   globalThis.__KLF_APP__ = App;
   ReactDOM.createRoot(document.getElementById("root")).render(/* @__PURE__ */ React.createElement(App, null));
